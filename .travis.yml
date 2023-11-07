@@ -15,7 +15,7 @@ after_success:
   - docker build -t kyryl2b/multi-server ./server
   - docker build -t kyryl2b/multi-worker ./worker
 
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin https://hub.docker.com/repositories/kyryl2b
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
   - docker push kyryl2b/multi-client
   - docker push kyryl2b/multi-nginx
