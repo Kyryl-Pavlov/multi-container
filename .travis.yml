@@ -4,7 +4,7 @@ services:
   - docker
 
 before_install:
-  - docker build -t kyryl2b/react-test ./client -f Dockerfile.dev ./client
+  - docker build -t kyryl2b/react-test -f ./client/Dockerfile.dev ./client
 
 script:
   - docker run -e CI=true kyryl2b/react-test npm test
