@@ -1,0 +1,23 @@
+sudo: required
+language: generic
+services:
+  - docker
+
+before_install:
+  - docker build -t kyryl2b/react-test ./client -f Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true kyryl2b/react-test npm test
+
+after_success:
+  - docker build -t kyryl2b/multi-client ./client
+  - docker build -t kyryl2b/multi-nginx ./nginx
+  - docker build -t kyryl2b/multi-server ./server
+  - docker build -t kyryl2b/multi-worker ./worker
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker push kyryl2b/multi-client
+  - docker push kyryl2b/multi-nginx
+  - docker push kyryl2b/multi-server
+  - docker push kyryl2b/multi-worker
